@@ -5,38 +5,38 @@ import ChatBox from "@/components/ChatBox.vue";
 
 const me = ref<User>({
   id: "user",
-  avatar: "/avatar.jpg",
+  avatar: "/avatar2.png",
   name: "You",
 });
 const bot = ref<User>({
   id: "assistant",
-  avatar: "/bot.jpg",
-  name: "Botman",
+  avatar: "/bot2.png",
+  name: "Serendipity",
 });
 
 const users = computed(() => [me.value, bot.value]);
 
 const messages = ref<Message[]>([
   {
-    text: "Hey, how's it going?",
+    text: "What is this?",
     id: nanoid(),
     userId: "user",
     createdAt: new Date(new Date().getTime() - 5 * 60000),
   },
   {
-    text: "**Great!** I'm building a cool chat app at Vue.js Forge 🔥",
+    text: "**I'm Serendipity, your next-generation digital assistant. How can I help you today?",
     id: nanoid(),
     userId: "assistant",
     createdAt: new Date(new Date().getTime() - 4 * 60000),
   },
   {
-    text: "Very cool! I'm so jealous 😀",
+    text: "I have an art project, and I need help with the pitch",
     id: nanoid(),
     userId: "user",
     createdAt: new Date(new Date().getTime() - 2 * 60000),
   },
   {
-    text: "You can join me. Just visit the  [Vue.js Forge](https://vuejsforge.com/) website and sign-up. It's free!",
+    text: "I'm happy to help! Send me the idea, and I'll start a new project  😀",
     id: nanoid(),
     userId: "assistant",
     createdAt: new Date(),
