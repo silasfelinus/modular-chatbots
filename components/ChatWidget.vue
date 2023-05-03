@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from "nanoid";
-import { Message, User } from "~~/types";
+import { Message, User } from "@/types";
+import ChatBox from "@/components/ChatBox.vue";
 
 const me = ref<User>({
   id: "user",
