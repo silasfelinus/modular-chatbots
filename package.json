@@ -13,9 +13,12 @@
     "rollup": "3.18.0"
   },
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/tailwindcss": "^6.6.4",
     "@vueuse/nuxt": "^9.13.0",
+    "axios": "^1.4.0",
     "daisyui": "^2.51.5",
+    "dotenv": "^16.0.3",
     "html-to-image": "^1.11.11",
     "nanoid": "^4.0.1",
     "openai": "^3.2.1",
