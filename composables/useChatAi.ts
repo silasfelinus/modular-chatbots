@@ -1,9 +1,8 @@
-import type { Agent } from "@/agents";
-
-import type { AsyncState } from "@/types";
+import type { AgentName, AsyncState } from "@/types";
 import type { CreateChatCompletionResponse } from "openai";
+import { ref, computed } from "vue";
 
-export const useChatAi = ({ agent }: { agent: Agent }) => {
+export const useChatAi = ({ agent }: { agent: AgentName }) => {
   const state = ref<AsyncState>(null);
   const error = ref();
   const res = ref<CreateChatCompletionResponse>();
@@ -14,6 +13,30 @@ export const useChatAi = ({ agent }: { agent: Agent }) => {
   const firstChoice = computed(() => choices.value.at(0));
   const firstMessage = computed(() => firstChoice.value?.message);
 
+  async function fetchWithTimeout<T>(url: string, options: RequestInit, timeout: number = 30000): Promise<T> {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchPromise = fetch(url, { ...options, signal }).then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      return (await response.json()) as T;
+    });
+
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+        reject(new Error(`Request timed out after ${timeout}ms`));
+      }, timeout);
+      signal.addEventListener("abort", () => {
+        clearTimeout(timeoutId);
+      });
+    });
+
+    return Promise.race([fetchPromise, timeoutPromise]);
+  }
+
   async function chat(options: Record<string, any>) {
     try {
       res.value = undefined;
@@ -23,12 +46,16 @@ export const useChatAi = ({ agent }: { agent: Agent }) => {
         `/api/ai`,
         {
           method: "POST",
-          body: {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             ...options,
             agent,
-          },
+          }),
         }
       );
+
       if (!result.choices || !result.usage) {
         throw new Error("Invalid AI response");
       }

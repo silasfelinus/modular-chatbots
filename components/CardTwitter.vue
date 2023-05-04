@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { nextTick, computed } from 'vue';
+import { useChatAi } from '../composables/useChatAi';
+
 const props = defineProps<{
   url: string;
   temperature: number;
 }>();
 
-const { chat, state, firstMessage } = useChatAi({ agent: "twitter" });
+const { chat, state, firstMessage } = useChatAi({ agent: "Twitter" });
 const generate = () => nextTick(() => chat(props));
 defineExpose({ generate });
 

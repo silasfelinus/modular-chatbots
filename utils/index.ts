@@ -1,17 +1,14 @@
-import type { NitroFetchOptions } from "nitropack";
-export async function fetchWithTimeout<T>(
-  url: string,
-  fetchOptions: NitroFetchOptions<any, any> = {}
-): Promise<T> {
-  const controller = new AbortController();
-  const id = setTimeout(() => {
-    controller.abort();
-    throw new Error("Requet timed out");
-  }, 15_000);
-  const res = await $fetch<T>(url, {
-    ...fetchOptions,
-    signal: controller.signal,
-  });
-  clearTimeout(id);
-  return res;
-}
+<template>
+  <div class="max-w-full w-[900px] m-auto">
+    <NuxtErrorBoundary>
+      <SocialMediaPostGenerator />
+      <ChatWidget />
+      <template #error="{ error }">
+        <div>
+          <p class="text-4xl pt-10">⚠️ A fatal error has occurred:</p>
+          <p>{{ error }}</p>
+        </div>
+      </template>
+    </NuxtErrorBoundary>
+  </div>
+</template>

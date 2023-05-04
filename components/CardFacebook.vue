@@ -1,15 +1,19 @@
 <script setup lang="ts">
+import { nextTick, computed, defineProps } from 'vue';
+import { useChatAi } from '../composables/useChatAi';
+import useClipboard from 'vue-clipboard3';
+
 const props = defineProps<{
   url: string;
   temperature: number;
 }>();
 
-const { chat, state, firstMessage } = useChatAi({ agent: "facebook" });
+const { chat, state, firstMessage } = useChatAi({ agent: "Facebook" });
 
 const generate = () => nextTick(() => chat(props));
 defineExpose({ generate });
 
-const { copy } = useClipboard();
+const { toClipboard } = useClipboard();
 
 const postURL = computed(
   () =>
@@ -18,13 +22,8 @@ const postURL = computed(
     )}`
 );
 
-/**
- * We cannot pass the text to the facebook post
- * Thus we'll open the facebook share tab
- * and copy the text to the clipboard to make it easy to add to the post
- */
 function post() {
-  copy(firstMessage.value?.content || "");
+  toClipboard(firstMessage.value?.content || "");
   setTimeout(() => {
     window.open(postURL.value, "_blank");
   }, 500);

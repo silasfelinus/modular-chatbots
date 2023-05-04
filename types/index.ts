@@ -10,16 +10,12 @@ export interface Message {
   text: string;
 }
 
-export interface BotPreset {
-  id: string;
-  title: string;
-  role: string;
-  introduction: string;
-  personality: string;
-  avatar: string;
-  flavortext: string;
-  api: string;
-  isActive: boolean;
+export type AgentName = "Cassandra" | "Humboldt Host" | "Lazlo" | "Serendipity" | "Cosmos" | "Twitter" | "Facebook" | "Redbubble";
+
+export interface Agent {
+  name: AgentName;
+  description: string;
+  avatarUrl: string;
 }
 
 export type AsyncState = null | "loading" | "error" | "complete";

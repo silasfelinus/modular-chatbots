@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { AsyncState } from "~~/types";
+import type { AsyncState } from "../types";
+import { ref, watch, nextTick, computed } from 'vue';
 const props = defineProps<{
   title?: string;
   body?: string;

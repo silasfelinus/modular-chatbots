@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
     model: "gpt-3.5-turbo",
     messages: [],
     temperature: body.temperature || 1,
+    // @ts-expect-error checking above if agent exists
     ...agents[`${body.agent}Agent`](body),
   });
   return data;
