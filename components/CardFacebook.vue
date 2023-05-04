@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, computed, defineProps } from 'vue';
+import { nextTick, computed } from 'vue';
 import { useChatAi } from '../composables/useChatAi';
 import useClipboard from 'vue-clipboard3';
 

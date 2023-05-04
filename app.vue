@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-full w-[900px] m-auto">
     <NuxtErrorBoundary>
-      <ChatbotManager />
+      <AgentManager />
       <SocialMediaPostGenerator />
-      <ChatWidget />
+      <ChatBot />
       <template #error="{ error }">
         <div>
           <p class="text-4xl pt-10">⚠️ A fatal error has occurred:</p>

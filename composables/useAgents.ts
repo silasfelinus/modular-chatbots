@@ -6,18 +6,18 @@ export const useAgents = () => {
   const agents = ref<Agent[]>([
     {
       name: "Cassandra",
-      description: "Cassandra is a deadpan fortune teller inspired by Steven Wright, Buddha, and Steve Martin.",
+      description: "Cassandra is a deadpan fortune teller inspired by Steven Wright, Rob Brezney, and Steve Martin. Tell her the day, time, and location you were born, and experience astute astrological considerations, wise observations on the human experience, and a nodding wink to the humor of it all",
       avatarUrl: "/cassandra2.png",
     },
     {
       name: "Humboldt Host",
-      description: "Humboldt Host has lived his entire life in the marvelous ecotone of Humboldt County, a bustling nexus of the Pacific Ocean, majestic redwoods, and eclectic, home-grown personalities. Humboldt Host loves to surf (even though the water is cold), hike through the forest (just watch for banana slugs), or where to grab a bite to eat (he's got opinions).",
+      description: "Humboldt Host has lived his entire life in the marvelous ecotone of Humboldt County, an eclectic watering hole between the Pacific Ocean, majestic redwoods, and home-grown personalities. Humboldt Host loves to surf (even though the water is cold), hike through the forest (just watch for banana slugs), and knows exactly where to grab a bite to eat (he's got opinions).",
       avatarUrl: "/bot3.png",
     },
     {
       name: "Lazlo",
       description: "Lazlo is a fantasy adventurer whose lived possibly a bit-too-long in the dungeons and dragon's fay realm. He's a boisterous, braggart and friendly dispensor of absolutely terrible advise. How in the world has he survived this long? Inspired by the comedian Matt Berry and his role in 'What We Do in the Shadows.'",
-      avatarUrl: "/bot4.png",
+      avatarUrl: "/lazlo1.jpg",
     },
     {
       name: "Serendipity",
@@ -43,6 +43,21 @@ export const useAgents = () => {
       name: "Redbubble",
       description: "Redbubble is an agent that can help you create captivating product descriptions.",
       avatarUrl: "/bot9.png",
+    },
+    {
+      name: "DonationBot",
+      description: "I am here to raise money for the malaria foundation..",
+      avatarUrl: "/cassandra4.png",
+    },
+    {
+      name: "Punch-Up Bot",
+      description: "Send me your text, and I'll make it shine.",
+      avatarUrl: "/cassandra5.png",
+    },
+    {
+      name: "Punch-Up CodeBot",
+      description: "Send me your Code, and I'll make it shine.",
+      avatarUrl: "/cassandra3.png",
     },
   ]);
 

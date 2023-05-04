@@ -56,7 +56,7 @@ const isLoading = computed(() => props.state === "loading");
             ></textarea>
             <div v-else>
               <span class="italic opacity-80"
-                >Import an article to generate an announcement</span
+                >       </span
               >
             </div>
           </slot>

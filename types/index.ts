@@ -10,7 +10,7 @@ export interface Message {
   text: string;
 }
 
-export type AgentName = "Cassandra" | "Humboldt Host" | "Lazlo" | "Serendipity" | "Cosmos" | "Twitter" | "Facebook" | "Redbubble";
+export type AgentName = "Cassandra" | "Humboldt Host" | "Lazlo" | "Serendipity" | "Cosmos" | "Twitter" | "Facebook" | "Redbubble"|"DonationBot"|"Punch-Up Bot"|"Punch-Up CodeBot"
 
 export interface Agent {
   name: AgentName;
