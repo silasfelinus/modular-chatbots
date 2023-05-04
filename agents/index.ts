@@ -7,6 +7,7 @@ export * from "./cosmosAgent";
 export * from "./twitterAgent";
 export * from "./facebookAgent";
 export * from "./redbubbleAgent";
+export * from "./amiAgent";
 
 // util function for creating trainings with proper typing
 import type { CreateChatCompletionRequest } from "openai";

@@ -11,12 +11,12 @@ export const useAgents = () => {
     },
     {
       name: "Humboldt Host",
-      description: "Humboldt Host has lived his entire life in the marvelous ecotone of Humboldt County, an eclectic watering hole between the Pacific Ocean, majestic redwoods, and home-grown personalities. Humboldt Host loves to surf (even though the water is cold), hike through the forest (just watch for banana slugs), and knows exactly where to grab a bite to eat (he's got opinions).",
+      description: "Humboldt Host lives in Humboldt County, an eclectic ecotone nestled between the Pacific Ocean and majestic redwoods. Humboldt Host loves to talk about surfing (even though the water is cold), great river and hiking spots (just watch for banana slugs), and knows exactly where to grab a bite to eat (he's got opinions).",
       avatarUrl: "/bot3.png",
     },
     {
       name: "Lazlo",
-      description: "Lazlo is a fantasy adventurer whose lived possibly a bit-too-long in the dungeons and dragon's fay realm. He's a boisterous, braggart and friendly dispensor of absolutely terrible advise. How in the world has he survived this long? Inspired by the comedian Matt Berry and his role in 'What We Do in the Shadows.'",
+      description: "Lazlo is a fantasy adventurer whose lived possibly a bit-too-long in the D&D fay realm. He's a friendly braggart and  dispensor of absolutely terrible advise. How in the world has he survived this long? Inspired by the comedian Matt Berry and his role in 'What We Do in the Shadows.'",
       avatarUrl: "/lazlo1.jpg",
     },
     {
@@ -26,28 +26,28 @@ export const useAgents = () => {
     },
     {
       name: "Cosmos",
-      description: "Want to explore the world? How about the universe? Step right up aboard a trip that starts in your own world and evolves into something unique, courtesy of Cosmos, the friendly storyteller. Inspired by the brothers grimm, Jim Henson, anbd Neil Gaiman",
+      description: "Want to explore the universe? Step aboard a trip that starts in your own world and evolves into something unique, courtesy of Cosmos, the friendly storyteller. Inspired by the brothers grimm, Jim Henson, anbd Neil Gaiman",
       avatarUrl: "/bot6.png",
     },
     {
-      name: "Twitter",
-      description: "Twitter is an agent designed to help you create engaging tweets.",
+      name: "Twitter Bot",
+      description: "Twitter Bot is here to help you create engaging tweets.",
       avatarUrl: "/bot7.png",
     },
     {
-      name: "Facebook",
-      description: "Facebook is an agent that assists you in crafting appealing Facebook posts.",
+      name: "Facebook Bot",
+      description: "Facebook Bot is here to help you craft appealing Facebook posts.",
       avatarUrl: "/bot8.png",
     },
     {
-      name: "Redbubble",
-      description: "Redbubble is an agent that can help you create captivating product descriptions.",
+      name: "Redbubble Bot",
+      description: "Redbubble But is here to help you create captivating product descriptions.",
       avatarUrl: "/bot9.png",
     },
     {
-      name: "DonationBot",
-      description: "I am here to raise money for the malaria foundation..",
-      avatarUrl: "/cassandra4.png",
+      name: "Donation Bot",
+      description: "Donation Bot is here to help raise money for worthy causes.",
+      avatarUrl: "/cassandra-avatar.png",
     },
     {
       name: "Punch-Up Bot",
@@ -55,9 +55,14 @@ export const useAgents = () => {
       avatarUrl: "/cassandra5.png",
     },
     {
-      name: "Punch-Up CodeBot",
-      description: "Send me your Code, and I'll make it shine.",
+      name: "Punch-Up-Code Bot",
+      description: "Send me your Code, and I'll make it work.",
       avatarUrl: "/cassandra3.png",
+    },
+    {
+      name: "AMI - Anti-Malaria Intelligence",
+      description: "My goal is to end malaria's reign as the number one-killer of humanity.",
+      avatarUrl: "/cassandra4.png",
     },
   ]);
 

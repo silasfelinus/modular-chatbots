@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { Message, User } from "~~/types";
+import { ref, watch } from "vue";
+import { AgentName } from "~~/types";
+
+const currentAgent = ref<AgentName | null>(null);
+
+watch(currentAgent, (newAgent) => {
+  if (newAgent) {
+    bot.value.name = newAgent;
+  }
+});
+
 const me = ref<User>({
   id: "user",
-  avatar: "/avatar.jpg",
+  avatar: "/avatar2.png",
   name: "You",
 });
-const bot = ref<User>({
-  id: "assistant",
-  avatar: "/bot.jpg",
-  name: "DonationBot",
-});
+const bot = ref<User>({ id: "assistant", avatar: "/cassandra5.png", name: currentAgent.value || "A.M.I." });
+
 const users = computed(() => [me.value, bot.value]);
 const messages = ref<Message[]>([]);
 const usersTyping = ref<User[]>([]);
@@ -25,6 +33,7 @@ async function handleNewMessage(message: Message) {
   const res = await $fetch("/api/donate", {
     method: "POST",
     body: {
+      agent: currentAgent.value,
       messages: messagesForAPI.value,
     },
   });

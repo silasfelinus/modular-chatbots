@@ -7,7 +7,7 @@ const props = defineProps<{
   temperature: number;
 }>();
 
-const { chat, state, firstMessage } = useChatAi({ agent: "Twitter" });
+const { chat, state, firstMessage } = useChatAi({ agent: "Twitter Bot" });
 const generate = () => nextTick(() => chat(props));
 defineExpose({ generate });
 

@@ -3,13 +3,13 @@ import { Message, User } from "~~/types";
 
 const me = ref<User>({
   id: "user",
-  avatar: "/avatar.jpg",
+  avatar: "/avatar2.png",
   name: "You",
 });
 const bot = ref<User>({
   id: "assistant",
-  avatar: "/bot2.png",
-  name: "Serendipity",
+  avatar: "/cassandra5.png",
+  name: "AMI - The Anti-Malaria Intelligence",
 });
 
 const users = computed(() => [me.value, bot.value]);
@@ -25,7 +25,7 @@ const messagesForAPI = computed(() =>
   }))
 );
 
-const { chat } = useChatAi({ agent: "Serendipity" });
+const { chat } = useChatAi({ agent: "AMI - Anti-Malaria Intelligence" });
 async function handleNewMessage(message: Message) {
   messages.value.push(message);
   usersTyping.value.push(bot.value);

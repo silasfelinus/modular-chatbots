@@ -43,7 +43,7 @@ export const useChatAi = ({ agent }: { agent: AgentName }) => {
       state.value = "loading";
 
       const result = await fetchWithTimeout<CreateChatCompletionResponse>(
-        `/api/ai`,
+        `/api/donate`,
         {
           method: "POST",
           headers: {
