@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { nextTick, computed } from 'vue';
-import { useChatAi } from '../composables/useChatAi';
-
 const props = defineProps<{
   url: string;
   temperature: number;

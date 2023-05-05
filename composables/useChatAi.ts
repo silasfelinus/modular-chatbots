@@ -1,8 +1,9 @@
-import type { AgentName, AsyncState } from "@/types";
+import type { Agent } from "../types";
+import { ref, computed, Ref } from "vue";
+import type { AsyncState } from "@/types";
 import type { CreateChatCompletionResponse } from "openai";
-import { ref, computed } from "vue";
 
-export const useChatAi = ({ agent }: { agent: AgentName }) => {
+export const useChatAi = ({ agent }: { agent: Ref<Agent | null> }) => {
   const state = ref<AsyncState>(null);
   const error = ref();
   const res = ref<CreateChatCompletionResponse>();
@@ -13,49 +14,21 @@ export const useChatAi = ({ agent }: { agent: AgentName }) => {
   const firstChoice = computed(() => choices.value.at(0));
   const firstMessage = computed(() => firstChoice.value?.message);
 
-  async function fetchWithTimeout<T>(url: string, options: RequestInit, timeout: number = 30000): Promise<T> {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const fetchPromise = fetch(url, { ...options, signal }).then(async (response) => {
-      if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${response.statusText}`);
-      }
-      return (await response.json()) as T;
-    });
-
-    const timeoutPromise = new Promise<never>((_, reject) => {
-      const timeoutId = setTimeout(() => {
-        controller.abort();
-        reject(new Error(`Request timed out after ${timeout}ms`));
-      }, timeout);
-      signal.addEventListener("abort", () => {
-        clearTimeout(timeoutId);
-      });
-    });
-
-    return Promise.race([fetchPromise, timeoutPromise]);
-  }
-
   async function chat(options: Record<string, any>) {
     try {
       res.value = undefined;
       state.value = "loading";
 
       const result = await fetchWithTimeout<CreateChatCompletionResponse>(
-        `/api/donate`,
+        `/api/ai`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+          body: {
             ...options,
-            agent,
-          }),
+            agent: agent.value || null,
+          },
         }
       );
-
       if (!result.choices || !result.usage) {
         throw new Error("Invalid AI response");
       }

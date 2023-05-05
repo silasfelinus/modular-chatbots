@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { nanoid } from "nanoid";
-import { Message, User } from "~~/types";
+import { Message, User, Agent } from "~~/types";
 const props = withDefaults(
   defineProps<{
     messages: Message[];
     users: User[];
     me: User;
     usersTyping?: User[];
+    selectedAgent: Agent;
   }>(),
   {
     usersTyping: () => [],
@@ -61,9 +62,9 @@ watch(
     >
       <!-- Header -->
       <header
-        class="dark:bg-gray-900 bg-gray-200 px-4 flex justify-between items-center"
-      >
-        Ami - (Anti-Malaria Intelligence)
+  class="dark:bg-gray-900 bg-gray-200 px-4 flex justify-between items-center"
+>
+  {{ props.selectedAgent.name }}
         <button class="p-4 pr-0" @click="open = false">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -83,16 +84,14 @@ watch(
       </header>
       <!-- Messages -->
       <div class="messages p-4 overflow-y-scroll max-h-[80vh]" ref="messageBox">
-        <div v-if="!messages.length" class="text-center w-[350px] m-auto">
-          <strong class="text-lg">Hi, I'm AMI!</strong>
-          <p>A Next-Gen Anti-Malaria Intelligence</p>
+        <div v-if="!props.messages.length" class="text-center w-[350px] m-auto">
+  <strong class="text-lg">Hi, I'm {{ props.selectedAgent.name }}</strong>
+
           <strong class="block mt-10"></strong>
           <ul class="list-inside list-disc text-left">
-            <li>What's the big deal about malaria?</li>
-            <li>Whho are you?</li>
-            <li>How can I help?</li>
-          </ul>
-        </div>
+    <p>{{ props.selectedAgent.intro }}</p>
+  </ul>
+</div>
         <ChatBubble
           data-test="chat-bubble"
           v-for="message in messages"

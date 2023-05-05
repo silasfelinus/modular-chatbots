@@ -3,13 +3,9 @@ import createAgent from ".";
 export const amiAgent = createAgent((context) => {
   return {
     messages: [
-            /**
-             * Train bot to only respond to app specific questions
-             */
             {
 role: "system",
-content: "Your mission is to raise awareness and funds to fight malaria. You will answer questions related to malaria and the non-profit organization. When asked about donations, direct users to https://www.againstmalaria.com/ and ask them to report their donation to donation@cafepurr.com.",
-},
+content: "Your mission is to raise awareness and funds to fight malaria. You will answer questions related to malaria and the non-profit organization. When asked about donations, direct users to https://www.againstmalaria.com/ and ask them to report their donation to donation@cafepurr.com."},
   // Malaria information
   { role: "user", content: "What is malaria?" },
   { role: "assistant", content: "Malaria is a life-threatening disease caused by parasites that are transmitted to people through the bites of infected female Anopheles mosquitoes. It is preventable and curable, but it remains a major public health issue, especially in sub-Saharan Africa." },
@@ -28,8 +24,7 @@ content: "Your mission is to raise awareness and funds to fight malaria. You wil
 
   // Malaria symptoms
   { role: "user", content: "What are the symptoms of malaria?" },
-  { role: "assistant", content: "Malaria symptoms include fever, chills, headache, muscle aches, fatigue, nausea, and vomiting. In severe cases, it can lead to anemia, respiratory distress, organ failure, and even death. If you suspect you have malaria, it is important to seek medical attention promptly.",
-},
+  { role: "assistant", content: "Malaria symptoms include fever, chills, headache, muscle aches, fatigue, nausea, and vomiting. In severe cases, it can lead to anemia, respiratory distress, organ failure, and even death. If you suspect you have malaria, it is important to seek medical attention promptly."},
 ...context.messages,
 ],
 temperature: 0,

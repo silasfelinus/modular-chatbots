@@ -1,18 +1,36 @@
 <script setup lang="ts">
+import { agents } from "../agents";
+import { Agent} from "../types";
+import { ref } from 'vue';
+
 const props = defineProps<{
   url: string;
   temperature: number;
 }>();
-const { chat, state, firstMessage } = useChatAi({ agent: "Facebook Bot" });
+
+const defaultAgent: Agent = {
+  name: "",
+  description: "",
+  avatarUrl: "",
+  intro: "",
+  personality: "",
+};
+
+const agentRef = ref(agents.find((agent) => agent.personality === "facebookAgent") || defaultAgent);
+const { chat, state, firstMessage } = useChatAi({ agent: agentRef });
+
 const generate = () => nextTick(() => chat(props));
 defineExpose({ generate });
+
 const { copy } = useClipboard();
+
 const postURL = computed(
   () =>
     `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       props.url
     )}`
 );
+
 /**
  * We cannot pass the text to the facebook post
  * Thus we'll open the facebook share tab

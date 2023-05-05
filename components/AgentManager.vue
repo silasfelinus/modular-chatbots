@@ -8,37 +8,32 @@
         :agent="agent.name"
         :avatarUrl="agent.avatarUrl"
         :description="agent.description"
-        @select="() => selectAgent(agent.name)"
+        @select="() => selectAgent(agent)"
       ></agent-card>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, defineEmits } from "vue";
+<script setup lang="ts">
 import AgentCard from "./AgentCard.vue";
-import { useAgents } from "../composables/useAgents";
-
-const currentAgent = ref(null);
-
-const emit = defineEmits(["select-agent"]);
+import type { Agent } from '../types';
+import { agents } from "../agents";
+import { useAppStore } from '../store';
 
 
-function selectAgent(agentName: string) {
-  emit('select-agent', agentName);
+// Use the store
+const store = useAppStore();
+const { setSelectedAgent } = store;
+
+function selectAgent(agent: Agent) {
+  setSelectedAgent(agent);
 }
 
-export default defineComponent({
+// Import the AgentCard component
+import { defineComponent } from 'vue';
+defineComponent({
   components: {
     AgentCard,
-  },
-  setup() {
-    const { agents } = useAgents();
-
-    return {
-      agents,
-      selectAgent,
-    };
   },
 });
 </script>

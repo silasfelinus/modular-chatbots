@@ -1,53 +1,61 @@
 <script setup lang="ts">
-import { Message, User } from "~~/types";
-import { ref, watch } from "vue";
-import { AgentName } from "~~/types";
+import { Message, User, Agent } from "~~/types";
+import { ref, computed } from "vue";
+import { useChatAi } from "@/composables/useChatAi";
+import { defaultAgent } from "@/agents";
 
-const currentAgent = ref<AgentName | null>(null);
-
-watch(currentAgent, (newAgent) => {
-  if (newAgent) {
-    bot.value.name = newAgent;
-  }
+const props = defineProps({
+  selectedAgent: {
+    type: Object as () => Agent | null,
+    default: null,
+  },
 });
+
+const currentAgent = ref<Agent | null>(props.selectedAgent);
+const selectedAgent = computed(() => currentAgent.value ?? defaultAgent);
 
 const me = ref<User>({
   id: "user",
   avatar: "/avatar2.png",
   name: "You",
 });
-const bot = ref<User>({ id: "assistant", avatar: "/cassandra5.png", name: currentAgent.value || "A.M.I." });
+
+const bot = computed(() => ({
+  id: "assistant",
+  avatar: selectedAgent.value?.avatarUrl ?? "/cassandra5.png",
+  name: selectedAgent.value?.name ?? "A.M.I.",
+}));
 
 const users = computed(() => [me.value, bot.value]);
 const messages = ref<Message[]>([]);
 const usersTyping = ref<User[]>([]);
-const messagesForAPI = computed(() =>
-  messages.value.map((m) => ({
-    role: m.userId,
-    content: m.text,
-  }))
-);
+
+const chatAi = useChatAi({ agent: currentAgent });
+
 async function handleNewMessage(message: Message) {
   messages.value.push(message);
   usersTyping.value.push(bot.value);
-  const res = await $fetch("/api/donate", {
-    method: "POST",
-    body: {
-      agent: currentAgent.value,
-      messages: messagesForAPI.value,
-    },
+
+  const res = await chatAi.chat({
+    messages: messages.value.map((m) => ({
+      role: m.userId,
+      content: m.text,
+    })),
   });
-  if (!res.choices[0].message?.content) return;
+
+  if (!chatAi.firstMessage.value) return;
+
   const msg = {
-    id: res.id,
+    id: res?.id ?? "",
     userId: bot.value.id,
     createdAt: new Date(),
-    text: res.choices[0].message?.content,
+    text: chatAi.firstMessage.value.content,
   };
   messages.value.push(msg);
   usersTyping.value = [];
 }
 </script>
+
 <template>
   <ChatBox
     :me="me"
@@ -55,5 +63,6 @@ async function handleNewMessage(message: Message) {
     :messages="messages"
     @new-message="handleNewMessage"
     :usersTyping="usersTyping"
+    :selectedAgent="selectedAgent"
   />
 </template>
