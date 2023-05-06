@@ -1,5 +1,8 @@
 <template>
   <div class="max-w-full w-[900px] m-auto">
+    <header class="py-4">
+      <ThemeChange />
+    </header>
     <NuxtErrorBoundary>
       <AgentManager />
       <SocialMediaPostGenerator />

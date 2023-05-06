@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { nanoid } from "nanoid";
-import { Message, User, Agent } from "~~/types";
+import { Message, User } from "~~/types";
+import { useAppStore } from "../store";
+import { watch, ref } from "vue";
+
+const store = useAppStore();
+const chatBoxOpen = ref(false);
+
+watch(() => store.selectedAgent.value, () => {
+  if (!chatBoxOpen.value) {
+    chatBoxOpen.value = true;
+  }
+});
+
 const props = withDefaults(
   defineProps<{
     messages: Message[];
     users: User[];
     me: User;
     usersTyping?: User[];
-    selectedAgent: Agent;
   }>(),
   {
     usersTyping: () => [],
@@ -18,22 +29,18 @@ defineEmits<{
   (e: "newMessage", payload: Message): void;
 }>();
 
-const open = ref(false);
-
 function getUser(id: string) {
   return props.users.find((user) => user.id === id);
 }
 
-// focus input whenever chatbox is opened
 const input = ref();
-watch(open, () => {
-  if (!open.value) return;
+watch(chatBoxOpen, () => {
+  if (!chatBoxOpen.value) return;
   nextTick(() => {
     (input.value as HTMLInputElement).focus();
   });
 });
 
-// keep messages anchored to bottom
 const messageBox = ref();
 watch(
   () => props.messages,
@@ -45,53 +52,37 @@ watch(
   { deep: true }
 );
 </script>
+
 <template>
-  <div class="fixed bottom-[10px] right-[10px]">
+  <div class="fixed bottom-2 right-2">
     <button
-      v-show="!open"
-      @click="open = true"
-      class="bg-blue-500 p-3 rounded"
+      v-show="!chatBoxOpen"
+      @click="chatBoxOpen = true"
+      class="btn btn-primary"
       data-test="chat-widget-trigger"
-    > 
-      <IconChat class="h-8 w-8 text-white" />
+    >
+      <IconChat class="h-8 w-8" />
     </button>
     <div
-      v-if="open"
+      v-if="chatBoxOpen"
       data-test="chat-widget-content"
-      class="box bg-gray-300 dark:bg-gray-800 rounded w-[450px] overflow-hidden"
+      class="card w-[450px] h-[75vh] shadow-2xl rounded-lg overflow-hidden"
     >
-      <!-- Header -->
-      <header
-  class="dark:bg-gray-900 bg-gray-200 px-4 flex justify-between items-center"
->
-  {{ props.selectedAgent.name }}
-        <button class="p-4 pr-0" @click="open = false">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-            />
-          </svg>
+      <header class="card-header flex justify-between">
+        <h2 class="card-title">{{ store.selectedAgent.value?.name }}</h2>
+        <button class="btn btn-ghost" @click="chatBoxOpen = false">
+          <IconX class="h-6 w-6" />
         </button>
       </header>
-      <!-- Messages -->
-      <div class="messages p-4 overflow-y-scroll max-h-[80vh]" ref="messageBox">
+      <div class="card-body p-4 overflow-y-scroll" ref="messageBox">
         <div v-if="!props.messages.length" class="text-center w-[350px] m-auto">
-  <strong class="text-lg">Hi, I'm {{ props.selectedAgent.name }}</strong>
-
-          <strong class="block mt-10"></strong>
-          <ul class="list-inside list-disc text-left">
-    <p>{{ props.selectedAgent.intro }}</p>
-  </ul>
-</div>
+          <strong class="text-lg text-blue-600">
+            Hi, I'm {{ store.selectedAgent.value?.name }}
+          </strong>
+          <ul class="list-disc list-inside text-left mt-10">
+            <p>{{ store.selectedAgent.value?.intro }}</p>
+          </ul>
+        </div>
         <ChatBubble
           data-test="chat-bubble"
           v-for="message in messages"
@@ -100,17 +91,15 @@ watch(
           :user="getUser(message.userId)"
           :my-message="message.userId === me.id"
         />
-
         <ChatBubble v-for="user in usersTyping" :key="user.id" :user="user">
           <AppLoading />
         </ChatBubble>
       </div>
-      <!-- Footer -->
-      <footer class="p-2">
+      <footer class="card-footer">
         <input
           data-test="chat-input"
           ref="input"
-          class="input w-full px-2 block"
+          class="input w-full px-2 py-1 block bg-white text-black rounded"
           type="text"
           placeholder="Type your message"
           @keypress.enter.exact="

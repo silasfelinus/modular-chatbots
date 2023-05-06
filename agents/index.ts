@@ -12,6 +12,7 @@ export { punchupCodeAgent } from "./punchupCodeAgent";
 export { redbubbleAgent } from "./redbubbleAgent";
 export { serendipityAgent } from "./serendipityAgent";
 export { turingAgent } from "./turingAgent";
+export { ottoAgent } from "./ottoAgent";
 
 // util function for creating trainings with proper typing
 import type { CreateChatCompletionRequest } from "openai";
@@ -28,5 +29,5 @@ export const defaultAgent: Agent = {
   description: "Oh my goodness, get excited, something went wrong.",
   avatarUrl: "/avatar1.jpg",
   intro: "Something went wrong with the code, do you want me to ask chatgpt for help?",
-  personality: "Helpful",
+  personality: "amiAgent",
 };

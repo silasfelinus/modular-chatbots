@@ -19,7 +19,7 @@ const props = defineProps({
 const emit = defineEmits(['select']);
 
 function select() {
-  emit('select', props.agent);
+  emit('select');
 }
 </script>
 

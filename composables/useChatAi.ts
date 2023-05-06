@@ -1,9 +1,10 @@
-import type { Agent } from "../types";
-import { ref, computed, Ref } from "vue";
+import { ref, computed } from "vue";
+import { useAppStore } from "../store";
 import type { AsyncState } from "@/types";
 import type { CreateChatCompletionResponse } from "openai";
 
-export const useChatAi = ({ agent }: { agent: Ref<Agent | null> }) => {
+export const useChatAi = () => {
+  const { selectedAgent } = useAppStore();
   const state = ref<AsyncState>(null);
   const error = ref();
   const res = ref<CreateChatCompletionResponse>();
@@ -23,12 +24,10 @@ export const useChatAi = ({ agent }: { agent: Ref<Agent | null> }) => {
         `/api/ai`,
         {
           method: "POST",
-          body: {
+          body: JSON.stringify({
             ...options,
-            agent: agent.value || null,
-          },
-        }
-      );
+            agent: options.agent || selectedAgent.value || null,
+          }),})
       if (!result.choices || !result.usage) {
         throw new Error("Invalid AI response");
       }

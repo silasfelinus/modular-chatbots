@@ -1,5 +1,4 @@
 import { Configuration, OpenAIApi } from "openai";
-import fs from "fs";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);

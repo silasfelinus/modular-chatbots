@@ -13,6 +13,7 @@
     "rollup": "3.18.0"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.17",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/tailwindcss": "^6.6.4",
     "@vueuse/nuxt": "^9.13.0",

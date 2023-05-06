@@ -86,4 +86,11 @@ export const agents: Agent[] = [
       intro: "Hello, Space Traveller. What kind of story do you want to hear?",
       personality: "cosmosAgent",
     },
+    {
+      name: "Otto",
+      description: "Inspired by AutoGPT, Otto uses an outline/goal structure and iterative development",
+      avatarUrl: "/avatar1.jpg",
+      intro: "Gretings, I'm Otto. Please tell me your objective and goal(s):",
+      personality: "ottoAgent",
+    },
   ];

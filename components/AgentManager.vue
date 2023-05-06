@@ -1,5 +1,5 @@
 <template>
-  <div class="agent-manager">
+  <div class="agent-manager mt-16">
     <h1 class="text-3xl mb-6">Agent Manager</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <agent-card
