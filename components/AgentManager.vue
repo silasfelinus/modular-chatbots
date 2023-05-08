@@ -1,7 +1,7 @@
 <template>
   <div class="agent-manager mt-16">
-    <h1 class="text-3xl mb-6">Agent Manager</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <h1 class="text-3xl mb-6">Robot Factory</h1>
+    <div class="flex flex-wrap justify-center gap-6">
       <agent-card
         v-for="agent in agents"
         :key="agent.name"
@@ -19,7 +19,6 @@ import AgentCard from "./AgentCard.vue";
 import type { Agent } from '../types';
 import { agents } from "../agents";
 import { useAppStore } from '../store';
-
 
 // Use the store
 const store = useAppStore();
