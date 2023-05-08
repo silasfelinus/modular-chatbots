@@ -68,12 +68,17 @@ watch(
       data-test="chat-widget-content"
       class="card w-[450px] h-[75vh] shadow-2xl rounded-lg overflow-hidden"
     >
-      <header class="card-header flex justify-between">
-        <h2 class="card-title">{{ store.selectedAgent.value?.name }}</h2>
-        <button class="btn btn-ghost" @click="chatBoxOpen = false">
-          <IconX class="h-6 w-6" />
-        </button>
-      </header>
+    <header class="card-header flex flex-col items-center relative">
+  <h2 class="card-title mb-2">{{ store.selectedAgent.value?.name }}</h2>
+  <img
+    :src="store.selectedAgent.value?.avatarUrl"
+    alt=""
+    class="w-full h-[90%] object-cover mb-2 rounded-md shadow-lg"
+  />
+  <button class="btn btn-ghost absolute top-2 right-2" @click="chatBoxOpen = false">
+    <IconX class="h-6 w-6" />
+  </button>
+</header>
       <div class="card-body p-4 overflow-y-scroll" ref="messageBox">
         <div v-if="!props.messages.length" class="text-center w-[350px] m-auto">
           <strong class="text-lg text-blue-600">

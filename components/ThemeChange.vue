@@ -1,17 +1,19 @@
 <template>
-  <div class="theme-selector fixed top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+  <div class="theme-selector fixed top-0 left-1/2 transform -translate-x-1/2">
     <button
       @click="toggleMenu"
       @keydown.space.prevent="toggleMenu"
       tabindex="0"
+      aria-haspopup="true"
+      aria-label="Change theme"
       class="theme-btn bg-base-200 p-4 rounded-full focus:outline-none focus:ring focus:ring-primary shadow-md transform hover:scale-110 transition-all ease-in-out duration-200"
     >
       <span class="theme-icon w-6 h-6"></span>
     </button>
-    <transition name="fade">
+    <transition name="theme-menu-fade">
       <div
         v-show="open"
-        class="origin-top-right absolute left-0 ml-[-224px] mt-8 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 transition-opacity duration-200"
+        class="origin-top-center absolute left-1/2 transform -translate-x-1/2 mt-12 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 transition-opacity duration-200"
       >
         <div
           class="py-1 theme-list grid grid-cols-3 gap-2 p-2"
@@ -35,7 +37,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import "theme-change";
 
 const open = ref(false);
@@ -53,6 +55,12 @@ const changeTheme = (theme: string) => {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
 };
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem("theme");
+  const defaultTheme = savedTheme ? savedTheme : "emerald";
+  changeTheme(defaultTheme);
+});
 </script>
 
 <style>
@@ -60,23 +68,35 @@ const changeTheme = (theme: string) => {
   z-index: 1000;
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.theme-btn {
+  background-color: #1E3A8A;
+}
+
+.theme-icon {
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/%3E%3C/svg%3E');
+}
+
+
+
+.theme-menu-fade-enter-active,
+.theme-menu-fade-leave-active {
   transition: opacity 0.2s;
 }
-.fade-enter,
-.fade-leave-to {
+.theme-menu-fade-enter,
+.theme-menu-fade-leave-to {
   opacity: 0;
 }
-.theme-icon {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%239CA3AF"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>');
-}
 .theme-list {
-  max-height: 320px;
+  max-height: 400px; /* Increase the max-height */
   overflow-y: auto;
 }
 .theme-item:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+}
+
+/* Adjust the menu position */
+.transition {
+  left: 0;
 }
 </style>
