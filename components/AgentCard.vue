@@ -1,29 +1,34 @@
 <template>
   <div class="agent-card" @click="select">
     <div class="flex items-center">
-      <img :src="avatarUrl" :alt="agent" class="agent-card__avatar w-20 h-20 rounded-full" />
+      <img :src="agent.avatarUrl" :alt="agent.name" class="agent-card__avatar w-20 h-20 rounded-full" />
       <div class="agent-card__content ml-4">
-        <h2 class="agent-card__name text-2xl">{{ agent }}</h2>
-        <p class="agent-card__description text-base text-gray-500">{{ description }}</p>
+        <h2 class="agent-card__name text-2xl">{{ agent.name }}</h2>
+        <p class="agent-card__description text-base text-gray-500">{{ agent.description }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Agent } from '@/types';
+import { useAppStore } from '@/store';
 
 const props = defineProps({
-  agent: String,
-  avatarUrl: String,
-  description: String
+  agent: {
+    type: Object as () => Agent,
+    default: () => ({}),
+  },
 });
 
-const emit = defineEmits(['select']);
+const store = useAppStore();
 
 function select() {
-  emit('select');
+  store.setSelectedAgent(props.agent);
+  store.toggleChatWidgetOpen();
 }
 </script>
+
 <style scoped>
 .agent-card {
   width: 100%;

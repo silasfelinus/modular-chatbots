@@ -16,6 +16,7 @@ export interface Agent {
   avatarUrl: string;
   intro: string;
   personality: string;
+  format: string;
 }
 
 export type AsyncState = null | "loading" | "error" | "complete";

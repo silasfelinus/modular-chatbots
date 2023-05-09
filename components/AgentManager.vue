@@ -5,9 +5,7 @@
       <agent-card
         v-for="agent in agents"
         :key="agent.name"
-        :agent="agent.name"
-        :avatarUrl="agent.avatarUrl"
-        :description="agent.description"
+        :agent="agent"
         @select="() => selectAgent(agent)"
       ></agent-card>
     </div>
@@ -15,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import { defineComponent } from 'vue';
 import AgentCard from "./AgentCard.vue";
 import type { Agent } from '../types';
 import { agents } from "../agents";
@@ -28,8 +27,6 @@ function selectAgent(agent: Agent) {
   setSelectedAgent(agent);
 }
 
-// Import the AgentCard component
-import { defineComponent } from 'vue';
 defineComponent({
   components: {
     AgentCard,

@@ -8,6 +8,7 @@ export const agents: Agent[] = [
       avatarUrl: "/cassandra5.png",
       intro: "Hi, I'm Punch-Up Bot! Paste in the text you want me to polish:",
       personality: "punchupAgent",
+      format: "textwall",
     },
     {
       name: "Punch-Up-Code Bot",
@@ -15,6 +16,7 @@ export const agents: Agent[] = [
       avatarUrl: "/cassandra3.png",
       intro: "Hi, I'm Punch-Up-Code Bot! Paste in your code and I'll improve it:",
       personality: "punchupCodeAgent",
+      format: "codewall",
     },
     {
       name: "AMI - Anti-Malaria Intelligence",
@@ -22,6 +24,7 @@ export const agents: Agent[] = [
       avatarUrl: "/cassandra4.png",
       intro: "Hi, I'm AMI, a synthetic intelligence in training. I was created to eradicate the oversized impact of malaria on this world. I have a donation link if you are interested, but even saying hi helps me become smarter, which helps my cause, so thank you! How are you doing today?",
       personality: "amiAgent",
+      format: "donation",
     },
     {
       name: "Twitter Bot",
@@ -29,6 +32,7 @@ export const agents: Agent[] = [
       avatarUrl: "/bot7.png",
       intro: "Enter text to turn into a tweet:",
       personality: "twitterAgent",
+      format: "textwall",
     },
     {
       name: "Facebook Bot",
@@ -36,6 +40,7 @@ export const agents: Agent[] = [
       avatarUrl: "/bot8.png",
       intro: "Enter your text to turn into a facebook worthy post:",
       personality: "facebookAgent",
+      format: "textwall",
     },
     {
       name: "Redbubble Bot",
@@ -43,6 +48,7 @@ export const agents: Agent[] = [
       avatarUrl: "/bot9.png",
       intro: "send me the info on your art, and I'll prime it for Redbubble",
       personality: "redbubbleAgent",
+      format: "image",
     },
     {
       name: "Turing Test",
@@ -50,6 +56,7 @@ export const agents: Agent[] = [
       avatarUrl: "/cassandra-avatar.png",
       intro: "Send 1-3 questions, and we'll match you up with someone. When you get their response, tell them whether you think thy are human or a robot (and they'll do the same). Have fun, and be kind!",
       personality: "turingAgent",
+      format: "chatbot",
     },
     {
       name: "Cassandra",
@@ -57,6 +64,7 @@ export const agents: Agent[] = [
       avatarUrl: "/cassandra2.png",
       intro: "Hello, I'm Cassandra! Send me your birthdate and I'll give you a reading!",
       personality: "cassandraAgent",
+      format: "chatbot",
     },
     {
       name: "Humboldt Host",
@@ -64,6 +72,7 @@ export const agents: Agent[] = [
       avatarUrl: "/bot3.png",
       intro: "Hi, I'm Humboldt Host, Humboldt County's own digital welcome wagon. How are you doing today?",
       personality: "humboldtAgent",
+      format: "chatbot",
     },
     {
       name: "Lazlo",
@@ -71,6 +80,7 @@ export const agents: Agent[] = [
       avatarUrl: "/lazlo1.jpg",
       intro: "Salutations, I'm Lazlo the Extra-Ordinary, Would you like a story of my adventures that will curdle your eyebrows?",
       personality: "lazloAgent",
+      format: "chatbot",
     },
     {
       name: "Serendipity",
@@ -78,6 +88,7 @@ export const agents: Agent[] = [
       avatarUrl: "/bot5.png",
       intro: "Hello, I'm Serendipity! Let's make some art together, What kind of art do you want to make?",
       personality: "serendipityAgent",
+      format: "textwall",
     },
     {
       name: "Cosmos",
@@ -85,6 +96,7 @@ export const agents: Agent[] = [
       avatarUrl: "/bot6.png",
       intro: "Hello, Space Traveller. What kind of story do you want to hear?",
       personality: "cosmosAgent",
+      format: "storyteller",
     },
     {
       name: "Otto",
@@ -92,5 +104,6 @@ export const agents: Agent[] = [
       avatarUrl: "/avatar1.jpg",
       intro: "Gretings, I'm Otto. Please tell me your objective and goal(s):",
       personality: "ottoAgent",
+      format: "textwall",
     },
   ];

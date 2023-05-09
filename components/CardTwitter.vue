@@ -1,26 +1,11 @@
 <script setup lang="ts">
-import { agents } from "@/agents";
-import { useAppStore } from "@/store";
-import { nextTick, computed } from "vue";
-import { useChatAi } from "@/composables/useChatAi";
-
 const props = defineProps<{
   url: string;
   temperature: number;
 }>();
 
-const store = useAppStore();
-const twitterAgent = agents.find((agent) => agent.personality === "twitterAgent");
-
-const { chat, state, firstMessage } = useChatAi();
-
-const generate = () => {
-  if (twitterAgent) {
-    store.setSelectedAgent(twitterAgent);
-  }
-  nextTick(() => chat(props));
-};
-
+const { chat, state, firstMessage } = useSocial({ agent: "twitter" });
+const generate = () => nextTick(() => chat(props));
 defineExpose({ generate });
 
 const postURL = computed(
@@ -30,7 +15,6 @@ const postURL = computed(
     )}`
 );
 </script>
-
 <template>
   <CardGeneric
     title="Twitter"

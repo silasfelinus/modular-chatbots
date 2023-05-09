@@ -1,26 +1,13 @@
 <script setup lang="ts">
-import { agents } from "@/agents";
-import { useAppStore } from "@/store";
-import { nextTick, computed } from "vue";
-import { useChatAi } from "@/composables/useChatAi";
-
+import { useSocial } from "../composables/useSocial"
 const props = defineProps<{
   url: string;
   temperature: number;
 }>();
 
-const store = useAppStore();
-const facebookAgent = agents.find((agent) => agent.personality === "facebookAgent");
+const { chat, state, firstMessage } = useSocial({ agent: "facebook" });
 
-const { chat, state, firstMessage } = useChatAi();
-
-const generate = () => {
-  if (facebookAgent) {
-    store.setSelectedAgent(facebookAgent);
-  }
-  nextTick(() => chat(props));
-};
-
+const generate = () => nextTick(() => chat(props));
 defineExpose({ generate });
 
 const { copy } = useClipboard();
@@ -32,6 +19,11 @@ const postURL = computed(
     )}`
 );
 
+/**
+ * We cannot pass the text to the facebook post
+ * Thus we'll open the facebook share tab
+ * and copy the text to the clipboard to make it easy to add to the post
+ */
 function post() {
   copy(firstMessage.value?.content || "");
   setTimeout(() => {
@@ -39,3 +31,18 @@ function post() {
   }, 500);
 }
 </script>
+<template>
+  <CardGeneric
+    :state="state"
+    title="Facebook"
+    :body="firstMessage?.content.trim()"
+    @update:body="firstMessage ? (firstMessage.content = $event) : null"
+  >
+    <div v-if="firstMessage?.content.trim()">
+      <button class="btn btn-neutral" @click="generate()">Regenerate</button>
+      <a :href="postURL" class="btn btn-primary" @click.prevent="post()">
+        Copy Text and Open Facebook
+      </a>
+    </div>
+  </CardGeneric>
+</template>

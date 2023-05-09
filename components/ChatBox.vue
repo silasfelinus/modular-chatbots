@@ -1,129 +1,138 @@
-<script setup lang="ts">
-import { nanoid } from "nanoid";
-import { Message, User } from "~~/types";
-import { useAppStore } from "../store";
-import { watch, ref } from "vue";
-
-const store = useAppStore();
-const chatBoxOpen = ref(false);
-
-watch(() => store.selectedAgent.value, () => {
-  if (!chatBoxOpen.value) {
-    chatBoxOpen.value = true;
-  }
-});
-
-const props = withDefaults(
-  defineProps<{
-    messages: Message[];
-    users: User[];
-    me: User;
-    usersTyping?: User[];
-  }>(),
-  {
-    usersTyping: () => [],
-  }
-);
-
-defineEmits<{
-  (e: "newMessage", payload: Message): void;
-}>();
-
-function getUser(id: string) {
-  return props.users.find((user) => user.id === id);
-}
-
-const input = ref();
-watch(chatBoxOpen, () => {
-  if (!chatBoxOpen.value) return;
-  nextTick(() => {
-    (input.value as HTMLInputElement).focus();
-  });
-});
-
-const messageBox = ref();
-watch(
-  () => props.messages,
-  () => {
-    nextTick(
-      () => (messageBox.value.scrollTop = messageBox.value.scrollHeight)
-    );
-  },
-  { deep: true }
-);
-</script>
 <template>
-  <div class="fixed bottom-2 right-2">
-    <button
-      v-show="!chatBoxOpen"
-      @click="chatBoxOpen = true"
-      class="btn btn-primary"
-      data-test="chat-widget-trigger"
-    >
-      <IconChat class="h-8 w-8" />
-    </button>
-    <div
-      v-if="chatBoxOpen"
-      data-test="chat-widget-content"
-      class="card w-[450px] h-[75vh] shadow-2xl rounded-lg overflow-hidden"
-    >
-      <header class="card-header flex flex-col items-center relative">
-        <h2 class="card-title mb-2">{{ store.selectedAgent.value?.name }}</h2>
-        <img
-          :src="store.selectedAgent.value?.avatarUrl"
-          alt=""
-          class="w-32 h-32 object-cover mb-2 rounded-full shadow-lg"
-        />
-        <button class="btn btn-ghost absolute top-2 right-2 text-white" @click="chatBoxOpen = false">
-          <IconX class="h-6 w-6" />
-        </button>
-      </header>
-      <div class="card-body p-4 overflow-y-scroll" ref="messageBox">
-        <div v-if="!props.messages.length" class="text-center w-[350px] m-auto">
-          <strong class="text-lg text-blue-600">
-            Hi, I'm {{ store.selectedAgent.value?.name }}
-          </strong>
-          <ul class="list-disc list-inside text-left mt-10 text-xl">
-            <p>{{ store.selectedAgent.value?.intro }}</p>
-          </ul>
+  <div class="chatbox flex flex-col h-full">
+    <div class="chatbox__messages flex-grow overflow-y-auto mb-4">
+      <div
+        v-for="message in messages"
+        :key="message.id"
+        class="message my-2 mx-4"
+        :class="{
+          'message--bot': message.userId === bot.id,
+          'message--user': message.userId === me.id,
+        }"
+      >
+        <div class="message__user text-xs text-gray-600">
+          {{ getUser(message.userId).name }}
         </div>
-        <ChatBubble
-          data-test="chat-bubble"
-          v-for="message in messages"
-          :key="message.id"
-          :message="message"
-          :user="getUser(message.userId)"
-          :my-message="message.userId === me.id"
-        />
-        <ChatBubble v-for="user in usersTyping" :key="user.id" :user="user">
-          <AppLoading />
-        </ChatBubble>
+        <div
+          class="message__text px-4 py-2 rounded-lg shadow-md"
+          :class="{
+            'bg-blue-500 text-white': message.userId === me.id,
+            'bg-gray-200 text-gray-800': message.userId === bot.id,
+          }"
+        >
+          {{ message.text }}
+        </div>
       </div>
-      <footer class="card-footer">
-        <input
-          data-test="chat-input"
-          ref="input"
-          class="input w-full px-2 py-1 block bg-white text-black rounded"
-          type="text"
-          placeholder="Type your message"
-          @keypress.enter.exact="
-            $emit('newMessage', {
-              id: nanoid(),
-              userId: me.id,
-              createdAt: new Date(),
-              text: ($event.target as HTMLInputElement).value,
-            });
-            ($event.target as HTMLInputElement).value = '';
-          "
-        />
-
-        <div class="h-6 py-1 px-2 text-sm italic">
-          <span v-if="usersTyping.length">
-            {{ usersTyping.map((user) => user.name).join(" and ") }}
-            {{ usersTyping.length === 1 ? "is" : "are" }} typing
-          </span>
-        </div>
-      </footer>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { Message, User } from "@/types";
+import { useChatAi } from "@/composables/useChatAi";
+import { useAppStore } from "@/store";
+
+const store = useAppStore();
+const { messages, addMessage } = store;
+
+const me = ref<User>({
+  id: "user",
+  avatar: "/avatar2.png",
+  name: "You",
+});
+
+const bot = computed(() => ({
+  id: "assistant",
+  avatar: store.selectedAgent.value?.avatarUrl ?? "/cassandra5.png",
+  name: store.selectedAgent.value?.name ?? "A.M.I.",
+}));
+
+const users = computed(() => [me.value, bot.value]);
+
+const chatAi = useChatAi();
+
+async function handleNewMessage(text: string) {
+  const message: Message = {
+    id: Date.now().toString(),
+    userId: me.value.id,
+    createdAt: new Date(),
+    text,
+  };
+
+  addMessage(message);
+
+  const res = await chatAi.chat({
+    messages: messages.value.map((m) => ({
+      role: m.userId,
+      content: m.text,
+    })),
+  });
+
+  if (!chatAi.firstMessage.value) return;
+
+  const msg = {
+    id: res?.id ?? "",
+    userId: bot.value.id,
+    createdAt: new Date(),
+    text: chatAi.firstMessage.value.content,
+  };
+  addMessage(msg);
+}
+
+function getUser(userId: string): User {
+  return users.value.find((user) => user.id === userId) ?? me.value;
+}
+</script>
+<style scoped>
+.chatbox {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chatbox__messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.message {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.message__user {
+  font-size: 0.75rem;
+  color: #4b5563;
+}
+
+.message--bot .message__user {
+  text-align: left;
+}
+
+.message--user .message__user {
+  text-align: right;
+}
+
+.message__text {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.message--bot .message__text {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.message--user .message__text {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+</style>

@@ -23,11 +23,3 @@ export default function createAgent(
 ) {
   return training;
 }
-import type { Agent } from "../types";
-export const defaultAgent: Agent = {
-  name: "Default Agent",
-  description: "Oh my goodness, get excited, something went wrong.",
-  avatarUrl: "/avatar1.jpg",
-  intro: "Something went wrong with the code, do you want me to ask chatgpt for help?",
-  personality: "amiAgent",
-};

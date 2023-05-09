@@ -1,60 +1,89 @@
+<template>
+  <div
+    :class="{
+      'fixed bottom-4 right-4': isSmallScreen,
+      'relative': !isSmallScreen
+    }"
+  >
+    <div v-if="!isOpen" @click="toggleOpen" class="p-4 bg-primary rounded-full">
+      <img
+        :src="selectedAgent?.avatarUrl"
+        :alt="selectedAgent?.name"
+        class="w-12 h-12 rounded-full object-cover"
+      />
+    </div>
+    <transition name="slide-fade">
+      <div
+        v-if="isOpen"
+        :style="`width: ${chatBoxWidth}px;`"
+        class="chat-widget max-h-full rounded-xl shadow-lg flex flex-col gap-4 p-4 bg-white overflow-y-auto"
+        @click.self="toggleOpen"
+      >
+        <img
+          :src="selectedAgent?.avatarUrl"
+          :alt="selectedAgent?.name"
+          class="w-16 h-16 rounded-full object-cover self-center"
+        />
+        <div
+          class="chat-widget__header text-center font-bold"
+          :style="`font-size: ${titleFontSize}px;`"
+        >
+          {{ selectedAgent?.name }}
+        </div>
+        <div class="chat-widget__intro text-gray-600 text-center">
+          {{ selectedAgent?.intro }}
+        </div>
+        <chat-box class="chat-widget__chat-box flex-grow rounded-xl p-4 bg-gray-100" />
+      </div>
+    </transition>
+  </div>
+</template>
+
+
 <script setup lang="ts">
-  import { Message, User, Agent } from "~~/types";
-  import { ref, computed } from "vue";
-  import { useChatAi } from "@/composables/useChatAi";
-  import { useAppStore } from "@/store";
+import { ref, computed } from 'vue';
+import ChatBox from './ChatBox.vue';
+import { useAppStore } from '@/store';
+import { useAgent } from '@/composables/useAgent';
+import { useBreakpoints } from '@/composables/useBreakpoints';
 
-  // Use the store
-  const store = useAppStore();
+const store = useAppStore();
+const { selectedAgent } = store;
+const agentFormat = selectedAgent.value ? selectedAgent.value.format : '';
+const { avatarBubbleSize, titleSize, textWindowSize } = useAgent(agentFormat);
 
-  const me = ref<User>({
-    id: "user",
-    avatar: "/avatar2.png",
-    name: "You",
-  });
+const chatBoxWidth = computed(() => parseInt(textWindowSize.value) * 10);
+const chatBoxHeight = computed(() => (parseInt(textWindowSize.value) * 10) * 0.9);
+const avatarSize = computed(() => parseInt(avatarBubbleSize.value) * 10);
+const titleFontSize = computed(() => parseInt(titleSize.value) * 2);
 
-  const bot = computed(() => ({
-    id: "assistant",
-    avatar: store.selectedAgent.value?.avatarUrl ?? "/cassandra5.png",
-    name: store.selectedAgent.value?.name ?? "A.M.I.",
-  }));
+const isOpen = ref(false);
+const toggleOpen = () => {
+  isOpen.value = !isOpen.value;
+};
 
-  const users = computed(() => [me.value, bot.value]);
-  const messages = ref<Message[]>([]);
-  const usersTyping = ref<User[]>([]);
+const { isSmallScreen } = useBreakpoints();
 
-  const chatAi = useChatAi();
-
-  async function handleNewMessage(message: Message) {
-    messages.value.push(message);
-    usersTyping.value.push(bot.value);
-
-    const res = await chatAi.chat({
-      messages: messages.value.map((m) => ({
-        role: m.userId,
-        content: m.text,
-      })),
-    });
-
-    if (!chatAi.firstMessage.value) return;
-
-    const msg = {
-      id: res?.id ?? "",
-      userId: bot.value.id,
-      createdAt: new Date(),
-      text: chatAi.firstMessage.value.content,
-    };
-    messages.value.push(msg);
-    usersTyping.value = [];
-  }
+import { defineComponent } from 'vue';
+defineComponent({
+  components: {
+    ChatBox,
+  },
+});
 </script>
 
-<template>
-  <ChatBox
-    :me="me"
-    :users="users"
-    :messages="messages"
-    @new-message="handleNewMessage"
-    :usersTyping="usersTyping"
-  />
-</template>
+<style scoped>
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.bg-primary {
+  background-color: #1f2937;
+}
+</style>
