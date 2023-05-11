@@ -13,6 +13,8 @@ export { redbubbleAgent } from "./redbubbleAgent";
 export { serendipityAgent } from "./serendipityAgent";
 export { turingAgent } from "./turingAgent";
 export { ottoAgent } from "./ottoAgent";
+export { seussAgent } from "./seussAgent";
+export { grantAgent } from "./grantAgent";
 
 // util function for creating trainings with proper typing
 import type { CreateChatCompletionRequest } from "openai";

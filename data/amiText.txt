@@ -1,0 +1,7 @@
+When the pandemic hit, like a lot of people, I sheltered in place. It gave me a different perspective, and after a late-night google search for the most cost-effective way to save human lives, I started a non-profit Save-One-Human (github.com/silasfelinus/saveonehuman) intending to raise money for malaria medicine.
+
+My pandemic experience lingered and the non-profit is inactive, having collected fees rather than funds.  I refocused on escaping graveyard jobs that wrecked my health by beefing up my coding skills, dreaming of supporting my family as a code monkey.
+
+But I couldn't get it out of my head that I'd just be returning to the old ways in a new job, and instead of beefing up my resume, I've been working on AMI, the Anti-Malaria Intelligence. She's a chatbot using vue3 and GPT-3.5, built to engage people in natural conversation to motivate donations and social shares to combat malaria. AMI is literally the most ethical tool I could craft with my current skillset.
+
+I've got more coding to do, AMI currently handles one simple question before going off on a wild rant like a caffeinated Unabomber, but if you're eager to help now, please make a contribution to our fund at www.againstmalaria.com/amibot

@@ -29,9 +29,10 @@ defineProps<{
     </div>
     <div
       data-test="chat-bubble-text"
-      class="chat-bubble py-0 prose prose-sm bg-white dark:bg-gray-900 max-w-max w-full"
+      class="chat-bubble py-0 prose prose-sm dark:bg-gray-900 max-w-max w-full"
       :class="{
-        'dark:bg-gray-700 bg-gray-600 dark:text-inherit text-teal': myMessage,
+        'bg-white': !myMessage,
+        'dark:bg-gray-700 bg-gray-600 dark:text-inherit text-white': myMessage,
       }"
     >
       <slot>
@@ -41,3 +42,12 @@ defineProps<{
     <!-- <div class="chat-footer opacity-50">Delivered</div> -->
   </div>
 </template>
+<style scoped>
+:deep(code) {
+  background: none;
+  @apply overflow-x-auto w-full;
+}
+:deep(pre) {
+  @apply dark:bg-[rgba(0,0,0,.3)] overflow-x-auto w-full;
+}
+</style>

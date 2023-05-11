@@ -8,65 +8,65 @@ interface UseAgentReturnType {
 }
 
 export function useAgent(agentType: string): UseAgentReturnType {
-  const small = 30;
-  const medium = 50;
-  const large = 70;
-  const xlarge = 90;
+  const small = 2;
+  const medium = 3;
+  const large = 4;
+  const xlarge = 5;
 
   const avatarBubbleSize = computed(() => {
     switch (agentType) {
       case 'textwall':
-        return `${medium}px`;
+        return `${medium}vw`;
       case 'codewall':
-        return `${small}px`;
+        return `${small}vw`;
       case 'donation':
-        return `${large}px`;
+        return `${large}vw`;
       case 'image':
-        return `${medium}px`;
+        return `${medium}vw`;
       case 'chatbot':
-        return `${medium}px`;
+        return `${medium}vw`;
       case 'storyteller':
-        return `${medium}px`;
+        return `${medium}vw`;
       default:
-        return `${medium}px`;
+        return `${medium}vw`;
     }
   });
 
   const titleSize = computed(() => {
     switch (agentType) {
       case 'textwall':
-        return `${large}px`;
+        return `${large}vw`;
       case 'codewall':
-        return `${medium}px`;
+        return `${medium}vw`;
       case 'donation':
-        return `${xlarge}px`;
+        return `${xlarge}vw`;
       case 'image':
-        return `${large}px`;
+        return `${large}vw`;
       case 'chatbot':
-        return `${medium}px`;
+        return `${medium}vw`;
       case 'storyteller':
-        return `${large}px`;
+        return `${large}vw`;
       default:
-        return `${medium}px`;
+        return `${medium}vw`;
     }
   });
 
   const textWindowSize = computed(() => {
     switch (agentType) {
       case 'textwall':
-        return `${large}px`;
+        return `${large}vh`;
       case 'codewall':
-        return `${medium}px`;
+        return `${medium}vh`;
       case 'donation':
-        return `${xlarge}px`;
+        return `${xlarge}vh`;
       case 'image':
-        return `${large}px`;
+        return `${large}vh`;
       case 'chatbot':
-        return `${medium}px`;
+        return `${medium}vh`;
       case 'storyteller':
-        return `${large}px`;
+        return `${large}vh`;
       default:
-        return `${medium}px`;
+        return `${medium}vh`;
     }
   });
 

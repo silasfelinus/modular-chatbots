@@ -7,7 +7,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <AgentManager />
         <SocialMediaPostGenerator />
-        <ChatWidget v-if="!isSmallScreen" />
+        <AmiWidget />
+        <DirectoryWidget />
       </div>
       <template #error="{ error }">
         <div class="text-center">
@@ -16,7 +17,6 @@
         </div>
       </template>
     </NuxtErrorBoundary>
-    <ChatWidget v-if="isSmallScreen" />
   </div>
 </template>
 

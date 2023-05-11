@@ -11,6 +11,22 @@ export const agents: Agent[] = [
       format: "textwall",
     },
     {
+      name: "Grant Bot",
+      description: "I'm heart to help you craft grant letters.",
+      avatarUrl: "/cassandra2.png",
+      intro: "Hi, I'm Grant, the grant writing professional! What can you tell me about the project?",
+      personality: "grantAgent",
+      format: "textwall",
+    },
+    {
+      name: "Seuss Bot",
+      description: "Give me a topic, and I'll write a seuss-worthy rap",
+      avatarUrl: "/seuss02.png",
+      intro: "Welcome, dear friend, to the SeussBot show\n Where rhymes are our game, and we're set to go\nJust give us a topic, and we'll make it grand\nA Seuss-style rap, like you've never planned!",
+      personality: "seussAgent",
+      format: "textwall",
+    },
+    {
       name: "Punch-Up-Code Bot",
       description: "Send me your Code, and I'll make it work.",
       avatarUrl: "/cassandra3.png",
@@ -76,7 +92,7 @@ export const agents: Agent[] = [
     },
     {
       name: "Lazlo",
-      description: "Lazlo is a fantasy adventurer whose lived possibly a bit-too-long in the D&D fay realm. He's a friendly braggart and  dispensor of absolutely terrible advise. How in the world has he survived this long? Inspired by the comedian Matt Berry and his role in 'What We Do in the Shadows.'",
+      description: "Lazlo is a fantasy adventurer whose lived possibly a bit-too-long in the D&D fey realm. He's a friendly braggart and  dispensor of absolutely terrible advise. How in the world has he survived this long? Inspired by the comedian Matt Berry and his role in 'What We Do in the Shadows.'",
       avatarUrl: "/lazlo1.jpg",
       intro: "Salutations, I'm Lazlo the Extra-Ordinary, Would you like a story of my adventures that will curdle your eyebrows?",
       personality: "lazloAgent",
