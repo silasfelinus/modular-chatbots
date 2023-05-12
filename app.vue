@@ -9,6 +9,7 @@
         <SocialMediaPostGenerator />
         <AmiWidget />
         <DirectoryWidget />
+        <AmiPage />
       </div>
       <template #error="{ error }">
         <div class="text-center">

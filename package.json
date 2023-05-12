@@ -5,10 +5,14 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "ignite": "concurrently \"npm run dev\" \"npm run backend\"",
+    "nuxt": "nuxt",
+    "backend": "cd backend && php artisan serve"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "concurrently": "^8.0.1",
     "nuxt": "^3.3.0",
     "rollup": "3.18.0"
   },
