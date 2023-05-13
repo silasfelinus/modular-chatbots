@@ -1,0 +1,29 @@
+Cafe Purr WebApp Specification
+Overview
+"Cafe Purr" is a web-based platform designed to interact with our Natural Language Processing (NLP) platforms, allowing users to create digital art, modify files, generate brainstorming ideas, write grant proposals, and interact with our flagship chatbot, AMI (Anti-Malaria Intelligence). Our goal is to create a community-focused experience that not only provides value to users through their interactions but also allows for monetization and promotion of products or designs created on our platform.
+
+Technologies
+Vue 3 Nuxt for frontend
+Laravel SQLite for backend
+Sections
+User Authentication: User registration, login, and management using Laravel.
+Chatbots Suite: Integrate AMI and other chatbots, ensure interaction with users and across multiple social media platforms.
+User Dashboard: Dynamic loading of user pages, user profile management, and personal project display.
+Live Chat Feature: Direct chat option with the chatbot and other users, with the ability to share and create images.
+Art Creation & Modification: Tools for users to create and modify digital art files.
+Gallery: AI-generated art assets displayed in a user-friendly, categorized format.
+Gift Shop: Monetization module for selling print-on-demand products based on user-created art. Users should be able to promote their products on social media.
+Donation System: Ability for users to donate to support AMI.
+Recommendations for Expansion
+Social Media Integration: Increase user engagement by allowing users to share their artworks and purchased products on social media platforms. This could be expanded to include Facebook, Pinterest, and LinkedIn.
+Art Marketplace: A peer-to-peer platform for users to buy, sell, or trade art created with the platform tools.
+Feedback System: A system for users to rate and review artworks, products, and chatbot interactions. This will encourage user interaction and provide valuable data for system improvements.
+Learning Resources: Tutorials, tips, and guides on how to get the most out of the platform tools, including art creation and chatbot interactions.
+Gamification: Implementing a rewards or points system to encourage user interaction, such as rewards for sharing on social media, creating art, or interacting with the chatbot.
+APIs for Third-Party Developers: Expose some functionalities via APIs to allow third-party developers to build upon the platform and expand its potential uses.
+Machine Learning Implementation: Implement machine learning algorithms to provide personalized suggestions and experiences to users based on their behavior and preferences.
+Mobile Application: Develop a mobile application for users to access the platform on the go.
+Current Project Status
+The current project status and all relevant files can be accessed via the GitHub Repository.
+
+Please note that the current layout needs refining, and not all sections are integrated. The next steps would be to polish the layout, implement missing sections, and ensure seamless user experience across all functionalities.
